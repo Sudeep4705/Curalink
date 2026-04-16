@@ -1,0 +1,2 @@
+const openAi = require("openai")
+

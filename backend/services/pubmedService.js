@@ -1,0 +1,100 @@
+const axios = require("axios");
+const xml2js = require("xml2js");
+
+const searchPubMed = async (query) => {
+  try {
+    const url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi";
+    const response = await axios.get(url, {
+      params: {
+        db: "pubmed",
+        term: query,
+        retmax: 50,
+        sort: "pub+date",
+        retmode: "json",
+      },
+    });
+    const ids = response.data.esearchresult.idlist;
+    return ids;
+  } catch (error) {
+    console.error("Error is PubMed Search", error.message);
+    return [];
+  }
+};
+
+const fetchPubMedDetails = async (ids) => {
+  try {
+    const url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi";
+    const response = await axios.get(url, {
+      params: {
+        db: "pubmed",
+        id: ids.join(","),
+        retmode: "xml",
+      },
+    });
+
+    const parser = new xml2js.Parser({ explicitArray: false }); // tool that help to convert xml to json 
+    const result = await parser.parseStringPromise(response.data);
+    const articles = result.PubmedArticleSet.PubmedArticle;
+
+    const cleanedData = articles.map((item) => {
+      const article = item.MedlineCitation.Article;
+    
+      
+      let cleanedAbstract = article.Abstract?.AbstractText;
+
+      if (Array.isArray(cleanedAbstract)) {
+        cleanedAbstract = cleanedAbstract.map((a) => a._).join(" ");
+        
+      } else if (
+        typeof cleanedAbstract === "object" &&
+        cleanedAbstract !== null
+      ) {
+        cleanedAbstract = cleanedAbstract._;
+      }
+      if (!cleanedAbstract || cleanedAbstract == "undefined") {
+        cleanedAbstract = "No abstract";
+      }
+      cleanedAbstract = String(cleanedAbstract);
+      return {
+        title:
+          typeof article.ArticleTitle === "object"
+            ? article.ArticleTitle._
+            : article.ArticleTitle || "No title",
+        abstract: cleanedAbstract.slice(0, 1000),
+        authors: Array.isArray(article.AuthorList?.Author)
+          ? article.AuthorList.Author.map((a) => `${a.ForeName} ${a.LastName}`)
+          : [],
+        year: article.ArticleDate?.Year || "N/A",
+      };
+    });
+    const query = "lung cancer treatment";
+    const keywords = query.toLowerCase().split(" ");
+
+    const scoreData = cleanedData.map((paper) => {
+      let score = 0;
+
+      const title = paper.title.toLowerCase();
+      const abstract = paper.abstract.toLowerCase();
+
+      keywords.forEach((word) => {
+        if (title.includes(word)) score += 2;
+        if (abstract.includes(word)) score += 1;
+      });
+      if (paper.year === "2026") score += 2;
+      else if (paper.year === "2025") score += 1;
+      return {
+        ...paper,
+        score,
+      };
+    });
+   
+    
+    const sorted = scoreData.sort((a, b) => b.score - a.score);
+    const topResults = sorted.slice(0, 5);
+    return topResults;
+  } catch (error) {
+    console.error("Error fetching details", error.message);
+    return null;
+  }
+};
+module.exports = { searchPubMed, fetchPubMedDetails };
