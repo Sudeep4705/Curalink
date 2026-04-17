@@ -1,11 +1,9 @@
-const express = require("express")
-const router = express.Router()
 const {searchPubMed,fetchPubMedDetails } = require("../services/pubmedService")
 const { fetchClinicalTrials} = require("../services/clinicalService")
 const { fetchOpenAlex } = require("../services/openAlexService");
-    
+const {generateSummary } =require("../services/llmService")
 
-router.get("/search",async(req,res)=>{
+module.exports.medicalController = async(req,res)=>{
     const query = req.query.q || "lung cancer"
         let finalquery = query;
         if(query.split(" ").length===1){
@@ -17,7 +15,7 @@ router.get("/search",async(req,res)=>{
         const openAlexPapers = await fetchOpenAlex(finalquery)
         const trials = await fetchClinicalTrials(finalquery)
 
-        // combine 
+    // combine 
     const allpapers = [...papers,...openAlexPapers]
     const keywords = query.toLowerCase().split(" ");
 
@@ -38,18 +36,16 @@ router.get("/search",async(req,res)=>{
         score,
       };
     });
-   
-    
     const sorted = scoreData.sort((a, b) => b.score - a.score);
     const topPapers = sorted.slice(0, 8);
+    const summary = await generateSummary(finalquery,topPapers,trials)
 
         res.json({
+            summary,
             papers:topPapers,
             trials:trials
         })
     }catch(error){
         res.status(500).json("search error",error)
     }
-})
-
-module.exports = router
+} 

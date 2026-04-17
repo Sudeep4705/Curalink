@@ -11,11 +11,8 @@
             })
             // return response.data
            const studies = response.data.studies;
-           if(!studies || studies.length ===0) return []
-      
-                
+           if(!studies || studies.length ===0) return [] 
            const clinicaltrials = studies.map((study)=>{
-            
             const protocol = study?.protocolSection;
 
             return {
@@ -25,8 +22,6 @@
                 location:protocol?.contactsLocationsModule?.locations?.[0]?.country || "N/A"
             }
            })
-
-           
         return clinicaltrials
         }
 

@@ -2,7 +2,7 @@ require('dotenv').config()
 const port= process.env.PORT
 const mongoose = require("mongoose")
 const express = require("express")
-const medicalRoute = require("./routes/medical")
+const medicalRoute = require("./routes/medical.routes")
 const { fetchOpenAlex } = require("./services/openAlexService");
 const cors = require("cors")
 const app = express()
