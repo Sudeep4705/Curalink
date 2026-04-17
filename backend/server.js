@@ -2,6 +2,7 @@ require('dotenv').config()
 const port= process.env.PORT
 const mongoose = require("mongoose")
 const express = require("express")
+const authRoute =require("./routes/auth.routes")
 const medicalRoute = require("./routes/medical.routes")
 const { fetchOpenAlex } = require("./services/openAlexService");
 const cors = require("cors")
@@ -25,11 +26,12 @@ DB()
 
 //middleware
 app.use(express.json())
-app.use(cors())
+app.use(cors({origin:" http://localhost:5173",credentials:true}))
 
 
 // routes
 app.use("/med",medicalRoute)
+app.use("/auth",authRoute)
 
 
 
