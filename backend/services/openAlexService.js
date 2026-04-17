@@ -10,14 +10,19 @@ const fetchOpenAlex = async(query)=>{
                 "per-page":20
             }
         })
-
+        
         const works  = response.data.results;
-
         const cleaned = works.map((item)=>({
             title:item.title || "No title",
             abstract:item.abstract_inverted_index
-            ? Object.keys(item.abstract_inverted_index).index.join(" ")
+            ? Object.keys(item.abstract_inverted_index).join(" "): "No abstract",
+            authors:item.authorships?.map(a=>a.author.display_name
+            ) || [],
+            year:item.publication_year || "NA",
+            source:"OpenAlex",
+            url:item.id
         }))
+        return cleaned
     }
     catch(error){
         console.error("openAlex Error",error.message)

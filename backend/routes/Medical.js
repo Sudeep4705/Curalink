@@ -2,24 +2,53 @@ const express = require("express")
 const router = express.Router()
 const {searchPubMed,fetchPubMedDetails } = require("../services/pubmedService")
 const { fetchClinicalTrials} = require("../services/clinicalService")
-
+const { fetchOpenAlex } = require("../services/openAlexService");
     
 
 router.get("/search",async(req,res)=>{
     const query = req.query.q || "lung cancer"
-
+        let finalquery = query;
+        if(query.split(" ").length===1){
+            finalquery = `${query} medical research`
+        }
     try{
-        const ids  = await searchPubMed(query)
+        const ids  = await searchPubMed(finalquery)
         const papers = await fetchPubMedDetails(ids)
+        const openAlexPapers = await fetchOpenAlex(finalquery)
+        const trials = await fetchClinicalTrials(finalquery)
 
-        const trials = await fetchClinicalTrials(query)
+        // combine 
+    const allpapers = [...papers,...openAlexPapers]
+    const keywords = query.toLowerCase().split(" ");
+
+    const scoreData = allpapers.map((paper) => {
+      let score = 0;
+
+      const title = paper.title.toLowerCase();
+      const abstract = paper.abstract.toLowerCase();
+
+      keywords.forEach((word) => {
+        if (title.includes(word)) score += 2;
+        if (abstract.includes(word)) score += 1;
+      });
+      if (paper.year === "2026") score += 2;
+      else if (paper.year === "2025") score += 1;
+      return {
+        ...paper,
+        score,
+      };
+    });
+   
+    
+    const sorted = scoreData.sort((a, b) => b.score - a.score);
+    const topPapers = sorted.slice(0, 8);
 
         res.json({
-            papers,
-            trials
+            papers:topPapers,
+            trials:trials
         })
     }catch(error){
-        res.status(500).json({error:"Something went wrong"})
+        res.status(500).json("search error",error)
     }
 })
 
