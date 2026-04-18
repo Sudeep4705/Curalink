@@ -153,8 +153,8 @@ export default function Chatbot() {
               </motion.div>
             </>
           )}
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center text-white text-xs font-bold shadow ml-1">
-            {User?.username?.[0]?.toUpperCase() || "?"}
+          <div className="w-15 h-8 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center text-white text-xs font-bold shadow ml-1">
+            {User?.username?.toUpperCase() || "?"}
           </div>
         </div>
       </motion.nav>
