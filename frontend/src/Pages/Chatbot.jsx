@@ -153,9 +153,12 @@ export default function Chatbot() {
               </motion.div>
             </>
           )}
-          <div className="w-15 h-8 rounded-full bg-gradient-to-br from-black to-white flex items-center justify-center text-white text-xs font-bold shadow ml-1">
-           <UserRound /> {User?.username?.toUpperCase()}
-          </div>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-900 text-white text-xs font-semibold shadow-md ml-1">
+  <div className="w-5 h-5 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+    <UserRound size={12} />
+  </div>
+  <span>{User?.username?.toUpperCase()}</span>
+</div>
         </div>
       </motion.nav>
 
