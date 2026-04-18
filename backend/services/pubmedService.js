@@ -23,7 +23,6 @@ const searchPubMed = async (query) => {
 
 const fetchPubMedDetails = async (ids) => {
   try {
-     if (!ids || ids.length === 0) return [];
     const url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi";
     const response = await axios.get(url, {
       params: {
@@ -66,10 +65,7 @@ const articles = Array.isArray(rawArticles)
         cleanedAbstract = "No abstract";
       }
       cleanedAbstract = String(cleanedAbstract);
-     const pmid =
-        item?.MedlineCitation?.PMID?._ ||
-        item?.MedlineCitation?.PMID ||
-        "unknown";
+      const pmid = item.MedlineCitation.PMID?._ || item.MedlineCitation.PMID;
       return {
         title:
           typeof article.ArticleTitle === "object"
