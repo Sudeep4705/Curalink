@@ -30,7 +30,7 @@ export default function Login(){
       },{withCredentials:true})
       toast.success(res.data.message)
       setUser(res.data.user)
-       navigate("/chatbot") 
+       navigate("/") 
     }
     catch(err){
         toast.error(err || "google error")
