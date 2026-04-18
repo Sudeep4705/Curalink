@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/Context";
 import {  useContext } from "react";
+import { GoogleLogin } from "@react-oauth/google";
 import toast from "react-hot-toast"
 export default function Login(){
   const [eye, seteye] = useState(false);
@@ -17,10 +18,23 @@ export default function Login(){
       let res = await axios.post("http://localhost:8222/auth/login", data, { withCredentials: true })
         setUser(res.data.user)
       toast.success(res.data.message)
+       navigate("/chatbot") 
     } catch(error) {
       toast.error(error.response?.data?.message || "Something went wrong")
     }
   };
+    const sendtoken = async(credential)=>{
+    try{
+       let res = await axios.post("http://localhost:8222/google/authlogin",{
+        token:credential
+      },{withCredentials:true})
+      toast.success(res.data.message)
+      setUser(res.data.user)
+       navigate("/chatbot") 
+    }
+    catch(err){
+        toast.error(err || "google error")
+      }}
   return (
     <div
       className="register-form w-full"
@@ -54,7 +68,13 @@ export default function Login(){
               Sign in with open account
             </h1>
           </div>
-          <div className="google-btn"></div>
+          <div className="google-btn">
+             <GoogleLogin  size="large" onSuccess={(response)=>{
+                       sendtoken(response.credential)
+                  }} onError={()=>{
+                    console.log("Login failed");
+                  }}/>
+          </div>
 
           {/*form*/}
           <div className="default-form py-2">

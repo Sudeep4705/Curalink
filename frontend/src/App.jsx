@@ -3,6 +3,9 @@ import UserLayout from "./Layouts/UserLayout"
 import Register from "./Pages/Register"
 import Login from "./Pages/Login"
 import  { Toaster } from 'react-hot-toast';
+import Chatbot from "./Pages/Chatbot";
+import ProtectedRoutes from "./Components/ProtectedRoutes";
+import Hero from "./Pages/Hero";
 
 
 function App() {
@@ -14,8 +17,12 @@ function App() {
           <Toaster position="top-center"/>
       <Routes>
         <Route path="/" element={<UserLayout/>}>
+        <Route index element={<Hero/>}/>
         <Route path="register" element={<Register/>}/>
         <Route path="login" element={<Login/>}/>
+        <Route path="chatbot" element={
+          <Chatbot/>
+         }/>
         </Route>
       </Routes>
       </BrowserRouter>

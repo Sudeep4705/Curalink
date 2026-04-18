@@ -8,11 +8,31 @@ const generateSummary  = async(query,papers,trials)=>{
 
         Clinical Trials:${trials.map((t,i)=>`${i+1}.${t.title} (${t.status})`).join("\n")}
 
-        Task:
-        1. Explain the condition briefly
-        2. Summarize key research 
-        3. Mention important clinical trials
-        4. Keep it simple 
+Task:
+You MUST return the answer in STRICT markdown format.
+
+Rules:
+- ALWAYS use "##" for section headings
+- ALWAYS use "-" for bullet points
+- NEVER write plain text headings
+- NEVER use === or any other symbols
+- Follow format EXACTLY
+
+Format:
+
+## Condition Overview
+- Explain the condition clearly
+
+## Research Insights
+- Insight 1
+- Insight 2
+
+## Clinical Trials
+- Trial 1
+- Trial 2
+
+Important:
+If you do not follow markdown format, the answer is incorrect.
         `;
 
           const response = await axios.post("http://localhost:11434/api/generate", {

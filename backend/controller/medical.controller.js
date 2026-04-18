@@ -3,13 +3,21 @@ const { fetchClinicalTrials} = require("../services/clinicalService")
 const { fetchOpenAlex } = require("../services/openAlexService");
 const {generateSummary } =require("../services/llmService")
 
+let lastQuery = ""
 module.exports.medicalController = async(req,res)=>{
-    const query = req.query.q || "lung cancer"
-        let finalquery = query;
-        if(query.split(" ").length===1){
-            finalquery = `${query} medical research`
-        }
     try{
+         const query = req.params.query
+
+        let finalquery = query;
+        if(lastQuery && query !== lastQuery && query.split(" ").length <= 2){
+            finalquery = `${query} ${lastQuery}`
+        }
+       
+        if(query.split(" ").length===1){
+            finalquery = `${finalquery} medical research`
+        }
+
+        lastQuery = query
         const ids  = await searchPubMed(finalquery)
         const papers = await fetchPubMedDetails(ids)
         const openAlexPapers = await fetchOpenAlex(finalquery)

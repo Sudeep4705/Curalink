@@ -42,7 +42,6 @@ router.post("/signup",zodAuth(Registervalidation),async(req,res)=>{
 
 router.post("/login",zodAuth(Loginvalidation),async(req,res)=>{
      try{
-     
           let {email,password} = req.body
              console.log(req.body);
     let checkemail = await User.findOne({email})
@@ -69,8 +68,21 @@ router.post("/login",zodAuth(Loginvalidation),async(req,res)=>{
     } 
 })
 
-router.post("/me",Authcheck,(req,res)=>{
+router.get("/logout",async(req,res)=>{
+  res.clearCookie("token",{
+  httpOnly:true,
+  secure:process.env.NODE_ENV == "production",
+  sameSite:process.env.NODE_ENV == "production" ? "none" : "strict",
+  maxAge:5*60*60*1000
+  })
+   return res.json({message:"Logout Successfully"})
+})
+
+router.get("/me",Authcheck,(req,res)=>{
+    console.log(req.user);
       return res.status(200).json({user:req.user})
 })
+
+
 
 module.exports =router

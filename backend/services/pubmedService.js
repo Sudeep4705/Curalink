@@ -34,7 +34,9 @@ const fetchPubMedDetails = async (ids) => {
 
     const parser = new xml2js.Parser({ explicitArray: false }); // tool that help to convert xml to json 
     const result = await parser.parseStringPromise(response.data);
-    const articles = result.PubmedArticleSet.PubmedArticle;
+   const articles = Array.isArray(result.PubmedArticleSet.PubmedArticle)
+  ? result.PubmedArticleSet.PubmedArticle
+  : [result.PubmedArticleSet.PubmedArticle];
 
     const cleanedData = articles.map((item) => {
       const article = item.MedlineCitation.Article;
@@ -55,6 +57,7 @@ const fetchPubMedDetails = async (ids) => {
         cleanedAbstract = "No abstract";
       }
       cleanedAbstract = String(cleanedAbstract);
+      const pmid = item.MedlineCitation.PMID?._ || item.MedlineCitation.PMID;
       return {
         title:
           typeof article.ArticleTitle === "object"
@@ -65,6 +68,8 @@ const fetchPubMedDetails = async (ids) => {
           ? article.AuthorList.Author.map((a) => `${a.ForeName} ${a.LastName}`)
           : [],
         year: article.ArticleDate?.Year || "N/A",
+        url: `https://pubmed.ncbi.nlm.nih.gov/${pmid}/`,
+       source: "PubMed"
       };
     });
     return cleanedData

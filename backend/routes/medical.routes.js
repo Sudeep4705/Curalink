@@ -2,6 +2,6 @@ const express = require("express")
 const router = express.Router()
 const medical = require("../controller/medical.controller")
 
-router.get("/search",medical.medicalController)
+router.get("/search/:query",medical.medicalController)
 
 module.exports = router
