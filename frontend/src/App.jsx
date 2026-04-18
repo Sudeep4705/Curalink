@@ -9,8 +9,6 @@ import ProtectedRoutes from "./Components/ProtectedRoutes";
 
 
 function App() {
-
-
   return (
     <>
       <BrowserRouter>
@@ -18,11 +16,12 @@ function App() {
       <Routes>
         <Route path="/" element={<UserLayout/>}>
          <Route index element={
-          <Chatbot/>
+          <ProtectedRoutes>
+               <Chatbot/>
+          </ProtectedRoutes>
          }/>
         <Route path="register" element={<Register/>}/>
         <Route path="login" element={<Login/>}/>
-       
         </Route>
       </Routes>
       </BrowserRouter>
