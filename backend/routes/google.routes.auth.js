@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { OAuth2Client } = require("google-auth-library");
-const User = require("../Model/auth.model")
+const User = require("../model/auth.model")
 const jwt = require("jsonwebtoken");
 
 router.post("/authsignup", async (req, res) => {

@@ -18,7 +18,7 @@ export default function Login(){
       let res = await axios.post("http://localhost:8222/auth/login", data, { withCredentials: true })
         setUser(res.data.user)
       toast.success(res.data.message)
-       navigate("/chatbot") 
+       navigate("/") 
     } catch(error) {
       toast.error(error.response?.data?.message || "Something went wrong")
     }

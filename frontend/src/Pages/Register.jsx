@@ -18,7 +18,7 @@ export default function Register() {
       let res = await axios.post("http://localhost:8222/auth/signup", data, { withCredentials: true })
       setUser(res.data.user)
       toast.success(res.data.message)
-       navigate("/chatbot") 
+       navigate("/") 
     } catch(error) {
       console.log(error);
       toast.error(error.response?.data?.message || "Something went wrong")
