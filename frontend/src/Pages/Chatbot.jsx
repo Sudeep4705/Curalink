@@ -8,10 +8,9 @@ import ReactMarkdown from "react-markdown";
 import { Paperclip,FlaskConical} from "lucide-react";
 
 const GREETING = (() => {
-  const now = new Date();
-  const istOffset = 5.5 * 60 * 60 * 1000; 
-  const istTime = new Date(now.getTime() + istOffset - (now.getTimezoneOffset() * 60 * 1000));
-  const h = istTime.getHours();
+  const h = new Date(
+    new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+  ).getHours();
   if (h < 12) return "Good morning";
   if (h < 18) return "Good afternoon";
   return "Good evening";
