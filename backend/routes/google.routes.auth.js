@@ -42,7 +42,7 @@ router.post("/authsignup", async (req, res) => {
     });
       const safeUser = {
       _id: user._id,
-      fullname: user.fullname,
+      username: user.username,
       email: user.email,
     };
     res.json({ message:"Signup Successfully" ,user:safeUser});
@@ -87,7 +87,7 @@ router.post("/authlogin", async (req, res) => {
     });
       const safeUser = {
       _id: user._id,
-      fullname: user.fullname,
+      username: user.username,
       email: user.email,
     };
     res.json({ message:"Login Successfully" ,user:safeUser});

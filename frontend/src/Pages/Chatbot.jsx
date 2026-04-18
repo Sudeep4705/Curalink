@@ -11,7 +11,6 @@ const GREETING = (() => {
   const h = new Date(
     new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
   ).getHours();
-  console.log("IST Hour:", h); // check this in browser console
   if (h < 12) return "Good morning";
   if (h < 18) return "Good afternoon";
   return "Good evening";
@@ -102,7 +101,6 @@ export default function Chatbot() {
         }
       ]);
     } catch (error) {
-      console.log(error);
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
