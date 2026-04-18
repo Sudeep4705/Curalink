@@ -6,8 +6,12 @@ import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import { Paperclip,FlaskConical} from "lucide-react";
+
 const GREETING = (() => {
-  const h = new Date().getHours();
+  const now = new Date();
+  const istOffset = 5.5 * 60 * 60 * 1000; 
+  const istTime = new Date(now.getTime() + istOffset - (now.getTimezoneOffset() * 60 * 1000));
+  const h = istTime.getHours();
   if (h < 12) return "Good morning";
   if (h < 18) return "Good afternoon";
   return "Good evening";

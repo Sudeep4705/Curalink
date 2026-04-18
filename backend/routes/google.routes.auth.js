@@ -14,7 +14,6 @@ router.post("/authsignup", async (req, res) => {
     });
     const payload = verify.getPayload();
     console.log("done1");
-    
     if(!payload.email){
        return res.status(400).json({ message: "Email not provided by Google" });
     }
