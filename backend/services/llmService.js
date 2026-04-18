@@ -39,7 +39,12 @@ If you do not follow markdown format, the answer is incorrect.
       model: "llama3",
       prompt: prompt,
       stream: false,
-    });
+      
+    },{
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
     return response.data.response;
     }
