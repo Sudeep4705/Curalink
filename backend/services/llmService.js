@@ -1,12 +1,13 @@
-const axios = require("axios")
+const Groq = require("groq-sdk");
 
-const generateSummary  = async(query,papers,trials)=>{
-    try{
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+const generateSummary = async (query, papers, trials) => {
+    try {
         const prompt = `
-        User Query:${query}
-        Top Papers:${papers.map((p,i)=>`${i+1}.${p.title}`).join("\n")}
-
-        Clinical Trials:${trials.map((t,i)=>`${i+1}.${t.title} (${t.status})`).join("\n")}
+        User Query: ${query}
+        Top Papers: ${papers.map((p, i) => `${i + 1}. ${p.title}`).join("\n")}
+        Clinical Trials: ${trials.map((t, i) => `${i + 1}. ${t.title} (${t.status})`).join("\n")}
 
 Task:
 You MUST return the answer in STRICT markdown format.
@@ -34,19 +35,19 @@ Format:
 Important:
 If you do not follow markdown format, the answer is incorrect.
         `;
-          const response = await axios.post("http://localhost:11434/api/generate", {
-      model: "llama3",
-      prompt: prompt,
-      stream: false,
-    });
 
-    return response.data.response;
+        const response = await groq.chat.completions.create({
+            model: "llama-3.3-70b-versatile",
+            messages: [{ role: "user", content: prompt }],
+            max_tokens: 1000,
+        });
+
+        return response.choices[0].message.content;
+
+    } catch (error) {
+        console.error("LLM Error:", error.message);
+        return "Failed to generate summary";
     }
-    catch(error){
-        console.error("LLM Erro:",error.message)
-        return "Failed to generate summary"
-    }
-}
+};
 
-module.exports = {generateSummary}
-
+module.exports = { generateSummary };
