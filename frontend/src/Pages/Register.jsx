@@ -15,7 +15,7 @@ export default function Register() {
    const { register, handleSubmit, formState: { errors } } = useForm();
    const formsubmit = async (data) => {
     try {
-      let res = await axios.post("http://localhost:8222/auth/signup", data, { withCredentials: true })
+      let res = await axios.post("https://curalink-xe7y.onrender.com/auth/signup", data, { withCredentials: true })
       setUser(res.data.user)
       toast.success(res.data.message)
        navigate("/") 
@@ -26,7 +26,7 @@ export default function Register() {
   };
    const sendtoken = async(credential)=>{
     try{
-       let res = await axios.post("http://localhost:8222/google/authsignup",{
+       let res = await axios.post("https://curalink-xe7y.onrender.com/google/authsignup",{
         token:credential
       },{withCredentials:true})
       toast.success(res.data.message)

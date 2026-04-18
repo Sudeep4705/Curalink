@@ -13,7 +13,7 @@ const [Loading,setLoading] = useState(true)
 useEffect(()=>{
     const verify = async()=>{
         try{
-            let res =await axios.get("http://localhost:8222/auth/me",{withCredentials:true})
+            let res =await axios.get("https://curalink-xe7y.onrender.com/auth/me",{withCredentials:true})
             console.log(res.data.user);
             setUser(res.data.user)
         }catch(error){

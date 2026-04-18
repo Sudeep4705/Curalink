@@ -15,7 +15,7 @@ export default function Login(){
   const { setUser } = useContext(AuthContext)
   const formsubmit = async (data) => {
     try {
-      let res = await axios.post("http://localhost:8222/auth/login", data, { withCredentials: true })
+      let res = await axios.post("https://curalink-xe7y.onrender.com/auth/login", data, { withCredentials: true })
         setUser(res.data.user)
       toast.success(res.data.message)
        navigate("/") 
@@ -25,7 +25,7 @@ export default function Login(){
   };
     const sendtoken = async(credential)=>{
     try{
-       let res = await axios.post("http://localhost:8222/google/authlogin",{
+       let res = await axios.post("https://curalink-xe7y.onrender.com/google/authlogin",{
         token:credential
       },{withCredentials:true})
       toast.success(res.data.message)

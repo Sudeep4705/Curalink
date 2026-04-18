@@ -76,7 +76,7 @@ export default function Chatbot() {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.get("http://localhost:8222/auth/logout", { withCredentials: true });
+      const res = await axios.get("https://curalink-xe7y.onrender.com/auth/logout", { withCredentials: true });
       setUser(null);
       toast.success(res.data.message);
     } catch (error) {
@@ -88,7 +88,7 @@ export default function Chatbot() {
     if (!query.trim()) return;
     try {
       setLoading(true);
-      const res = await axios.get(`http://localhost:8222/med/search/${query}`, { withCredentials: true });
+      const res = await axios.get(`https://curalink-xe7y.onrender.com/med/search/${query}`, { withCredentials: true });
       setResults((prev)=>[
         ...prev,
         {type:"user",text:query},
