@@ -23,6 +23,7 @@ const searchPubMed = async (query) => {
 
 const fetchPubMedDetails = async (ids) => {
   try {
+     if (!ids || ids.length === 0) return [];
     const url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi";
     const response = await axios.get(url, {
       params: {
@@ -34,9 +35,17 @@ const fetchPubMedDetails = async (ids) => {
 
     const parser = new xml2js.Parser({ explicitArray: false }); // tool that help to convert xml to json 
     const result = await parser.parseStringPromise(response.data);
-   const articles = Array.isArray(result.PubmedArticleSet.PubmedArticle)
-  ? result.PubmedArticleSet.PubmedArticle
-  : [result.PubmedArticleSet.PubmedArticle];
+
+ if (!result?.PubmedArticleSet?.PubmedArticle) {
+  console.error("No PubMed articles found");
+  return [];
+}
+
+const rawArticles = result.PubmedArticleSet.PubmedArticle;
+
+const articles = Array.isArray(rawArticles)
+  ? rawArticles
+  : [rawArticles];
 
     const cleanedData = articles.map((item) => {
       const article = item.MedlineCitation.Article;
@@ -57,7 +66,10 @@ const fetchPubMedDetails = async (ids) => {
         cleanedAbstract = "No abstract";
       }
       cleanedAbstract = String(cleanedAbstract);
-      const pmid = item.MedlineCitation.PMID?._ || item.MedlineCitation.PMID;
+     const pmid =
+        item?.MedlineCitation?.PMID?._ ||
+        item?.MedlineCitation?.PMID ||
+        "unknown";
       return {
         title:
           typeof article.ArticleTitle === "object"
