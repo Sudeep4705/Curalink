@@ -126,9 +126,22 @@ export default function Chatbot() {
         className="relative z-10 flex items-center justify-between px-6 py-3"
       >
         <div className="flex items-center gap-2">
-          <img src="/curalink_logo.svg" alt="" />
-          <span className="font-bold text-gray-900 text-lg tracking-tight">CurALink</span>
-        </div>
+  <svg width="32" height="32" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="36" cy="36" r="36" fill="url(#g)"/>
+    <polyline 
+      points="16,36 24,36 28,18 33,54 38,24 43,48 48,36 56,36"
+      fill="none" stroke="white" stroke-width="3.5" 
+      stroke-linecap="round" stroke-linejoin="round"
+    />
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="72" y2="72" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#4ade80"/>
+        <stop offset="100%" stop-color="#16a34a"/>
+      </linearGradient>
+    </defs>
+  </svg>
+  <span className="font-bold text-gray-900 text-lg tracking-tight">CurALink</span>
+</div>
 
         <div className="flex items-center gap-2">
           {User ? (
