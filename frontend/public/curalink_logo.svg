@@ -1,0 +1,25 @@
+<svg width="100%" viewBox="0 0 680 200" role="img" style="" xmlns="http://www.w3.org/2000/svg">
+  <title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">CurALink Logo</title>
+  <desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">CurALink medical research assistant logo with a green pulse/link icon</desc>
+
+  <defs>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4ade80"/>
+      <stop offset="100%" style="stop-color:#16a34a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Icon circle background -->
+  <circle cx="260" cy="100" r="36" fill="url(#greenGrad)" style="stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Pulse / ECG line inside circle -->
+  <polyline points="240,100 248,100 252,82 256,118 260,88 264,112 268,100 280,100" fill="none" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:round;stroke-linejoin:round;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- CurALink text -->
+  <text x="306" y="93" font-family="sans-serif" font-size="38" font-weight="700" fill="#16a34a" letter-spacing="-1" style="fill:rgb(22, 163, 74);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:sans-serif;font-size:38px;font-weight:700;text-anchor:start;dominant-baseline:auto">Cur</text>
+  <text x="364" y="93" font-family="sans-serif" font-size="38" font-weight="700" fill="#111827" letter-spacing="-1" style="fill:rgb(17, 24, 39);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:sans-serif;font-size:38px;font-weight:700;text-anchor:start;dominant-baseline:auto">A</text>
+  <text x="389" y="93" font-family="sans-serif" font-size="38" font-weight="700" fill="#16a34a" letter-spacing="-1" style="fill:rgb(22, 163, 74);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:sans-serif;font-size:38px;font-weight:700;text-anchor:start;dominant-baseline:auto">Link</text>
+
+  <!-- Tagline -->
+  <text x="307" y="118" font-family="sans-serif" font-size="13" fill="#6b7280" letter-spacing="2" style="fill:rgb(107, 114, 128);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:sans-serif;font-size:13px;font-weight:400;text-anchor:start;dominant-baseline:auto">AI MEDICAL RESEARCH</text>
+</svg>
