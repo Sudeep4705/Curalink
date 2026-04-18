@@ -128,13 +128,6 @@ export default function Chatbot() {
         className="relative z-10 flex items-center justify-between px-6 py-3"
       >
         <div className="flex items-center gap-2">
-          <div
-            className="w-7 h-7 rounded-lg"
-            style={{
-              background: "linear-gradient(135deg, #22c55e 0%, #86efac 100%)",
-              boxShadow: "0 2px 8px #22c55e44",
-            }}
-          />
           <span className="font-bold text-gray-900 text-lg tracking-tight">CurALink</span>
         </div>
 
