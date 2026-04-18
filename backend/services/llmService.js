@@ -35,16 +35,11 @@ Important:
 If you do not follow markdown format, the answer is incorrect.
         `;
 
-          const response = await axios.post("https://mumbo-upcountry-boggle.ngrok-free.dev/api/generate", {
+          const response = await axios.post("http://localhost:11434/api/generate", {
       model: "llama3",
       prompt: prompt,
       stream: false,
-      
-    },{
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+    });
 
     return response.data.response;
     }
